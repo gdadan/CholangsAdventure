@@ -28,8 +28,7 @@
 ### 📷 인게임 화면
 
 ***
-
-<img src="https://github.com/user-attachments/assets/884a0ca9-d859-445b-8dca-a7bb0328bb91  width="50%" height="50%">
+<img src="(https://github.com/user-attachments/assets/f44996be-40d7-4a19-8ef0-be9880fc3bc4)  width="50%" height="50%">
 ### 💡 소감
 
 ***
