@@ -24,6 +24,9 @@
 ***
 
 - 적들의 패턴과 플레이어 조작 구현
+
+  [적 코드 링크](https://github.com/gdadan/CholangsAdventure/blob/main/Assets/Scripts/Enemy.cs)
+
 - 타일맵으로 맵 디자인
 - 최고 점수 저장
 
