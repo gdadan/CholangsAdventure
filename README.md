@@ -13,6 +13,8 @@
 
 개발 장르 : 2D 플랫포머
 
+개발 인원 : 1명
+
 한 줄 설명 : 촐랑이의 모험은 몬스터와 장애물을 피해 결승점에 도달해야 하는 2D 플랫포머 게임입니다.
 
 
@@ -25,6 +27,8 @@
 - 타일맵으로 맵 디자인
 - 최고 점수 저장
 
+
+
 ### 📷 인게임 화면
 
 ***
@@ -33,6 +37,8 @@
 
 <img src="https://github.com/user-attachments/assets/6f746c23-3eb4-471e-9de6-cd84c4206f12"  width="45%" height="45%">
 <img src="https://github.com/user-attachments/assets/9542642f-6c7f-407f-b1c5-28f2e1047aff"  width="45%" height="45%">
+
+
 
 ### 💡 소감
 
