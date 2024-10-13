@@ -29,8 +29,7 @@
 
 ***
 
-![01 타이틀](https://github.com/user-attachments/assets/884a0ca9-d859-445b-8dca-a7bb0328bb91){: width="50" height="50"}
-
+<img src="https://github.com/user-attachments/assets/884a0ca9-d859-445b-8dca-a7bb0328bb91.png  width="400" height="200"/>
 ### 💡 소감
 
 ***
