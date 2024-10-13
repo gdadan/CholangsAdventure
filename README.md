@@ -30,7 +30,7 @@
 - 타일맵으로 맵 디자인
 - 최고 점수 저장
 
-  - [게임 매니저 링크](https://github.com/gdadan/CholangsAdventure/blob/main/Assets/Scripts/GameManager.cs)
+  - [게임 매니저 코드 링크](https://github.com/gdadan/CholangsAdventure/blob/main/Assets/Scripts/GameManager.cs)
 
 
 
