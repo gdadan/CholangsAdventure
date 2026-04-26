@@ -87,7 +87,7 @@ public void Mushroom(float speed, float layFront)
 
 ---
 
-## 🦘 2. 플레이어 — Raycast 기반 점프 판정과 벽 끼임 해결
+## 🛠 2. 플레이어 — Raycast 기반 점프 판정과 벽 끼임 해결
 
 ### 고민했던 점
 - 단순히 `Space` 키로 점프 힘만 주면 **공중 점프 가능 → 무한 점프 버그**
