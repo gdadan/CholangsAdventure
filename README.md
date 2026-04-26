@@ -11,7 +11,7 @@
 | 항목 | 내용 |
 |------|------|
 | **개발 기간** | 2023.08 ~ 2023.09 (약 10일) |
-| **개발 환경** | C#, Unity 2022.3 LTS |
+| **개발 환경** | C#, Unity |
 | **개발 장르** | 2D 플랫포머 |
 | **개발 인원** | 1명 (전체 단독 개발) |
 
@@ -45,16 +45,10 @@
 
 ## 🛠 1. 적 AI — enum 기반 패턴 분기
 
-### 무엇을 (What)
-3종의 몬스터(Mushroom / Chicken / Plant)에 각자 다른 패턴을 부여했습니다.
-- **Mushroom** : 평지를 돌아다니다 발판 끝에서 자동 회전
-- **Chicken** : Mushroom보다 빠른 속도로 동일 패턴 수행
-- **Plant** : 이동하지 않고 일정 간격으로 총알 발사
+### 고민했던 점
+처음에는 몬스터마다 다 따로 만들려 했지만, **공통 동작이 있어 중복**이 발생했습니다.
 
-### 왜 (Why)
-처음에는 몬스터마다 스크립트를 따로 만들려 했지만, **공통 동작이 많아 중복**이 발생했습니다.
-
-### 어떻게 (How)
+### 해결법
 `enum EnemyType` + `switch`로 한 스크립트에서 분기하고, **공통 이동 로직은 매개변수로 재사용**.
 
 ```csharp
@@ -95,14 +89,12 @@ public void Mushroom(float speed, float layFront)
 
 ## 🦘 2. 플레이어 — Raycast 기반 점프 판정과 벽 끼임 해결
 
-### 무엇을 (What)
-Rigidbody2D 기반의 자연스러운 점프와 좌우 이동, 그리고 **벽에 닿았을 때 공중에 끼이지 않도록** 처리했습니다.
-
-### 왜 (Why)
+### 고민했던 점
 - 단순히 `Space` 키로 점프 힘만 주면 **공중 점프 가능 → 무한 점프 버그**
 - 벽에 부딪힌 채로 점프하면 **벽에 붙어버리는 현상** 발생
 
-### 어떻게 (How)
+### 해결법
+Rigidbody2D 기반의 자연스러운 점프와 좌우 이동, 그리고 **벽에 닿았을 때 공중에 끼이지 않도록** 처리했습니다.
 
 **(1) 점프 가능 여부 — 아래 방향 Raycast로 발판 감지**
 ```csharp
@@ -139,75 +131,6 @@ if (!isGrouded && (rayHitRight.distance < 0.01f || rayHitLeft.distance < 0.01f))
 
 ---
 
-## 💚 3. 무적 시간 — 코루틴 + 레이어 변경
-
-### 무엇을 (What)
-피격 후 1초간 무적 + 반투명 효과.
-
-### 어떻게 (How)
-**레이어를 일시적으로 바꿔** 충돌 자체를 무시하고, 코루틴으로 시간을 잰 뒤 원복.
-
-```csharp
-void OnDamaged(Vector2 targetPos)
-{
-    GameManager.instance.HealthDown();
-    gameObject.layer = 11;                              // 무적 레이어
-    spriteRenderer.color = new Color(1, 1, 1, 0.4f);    // 반투명
-    StartCoroutine(OffDamage());
-}
-
-IEnumerator OffDamage()
-{
-    yield return new WaitForSeconds(1f);
-    gameObject.layer = 10;                              // 원래 레이어
-    spriteRenderer.color = new Color(1, 1, 1, 1);
-}
-```
-
-→ Unity의 **Layer Collision Matrix**를 처음 활용한 사례. 단순히 무적 플래그를 두는 것보다 깔끔하다는 걸 배웠습니다.
-
-<br/>
-
----
-
-## 🎮 4. GameManager — 싱글톤과 점수 영구 저장
-
-### 무엇을 (What)
-씬 전환·스테이지 전환·점수·체력·UI를 한 곳에서 관리하고, **최고 점수를 기기에 영구 저장**.
-
-### 어떻게 (How)
-
-**(1) 싱글톤 패턴**
-```csharp
-public static GameManager instance;
-private void Awake()
-{
-    if (instance == null) instance = this;
-    else Destroy(gameObject);
-}
-```
-
-**(2) PlayerPrefs로 최고 점수 영구 저장**
-```csharp
-public void RecordScore()
-{
-    int highScore = PlayerPrefs.GetInt("HighScore");
-    if (score > highScore)
-    {
-        highScore = score;
-        PlayerPrefs.SetInt("HighScore", highScore);
-    }
-    recordScore.text = "최고 점수 : " + highScore.ToString();
-}
-```
-
-→ 어디서든 `GameManager.instance.HealthDown()` 한 줄로 호출 가능. 적·플레이어·아이템에서 모두 활용.
-
-🔗 [GameManager.cs](./Assets/Scripts/GameManager.cs)
-
-<br/>
-
----
 
 ## 💡 회고 — 이 프로젝트에서 배운 것
 
@@ -222,7 +145,7 @@ public void RecordScore()
 ```
 Assets/Scripts/
 ├── Player.cs           # 플레이어 이동/점프/피격 (Raycast 활용)
-├── Enemy.cs            # 3종 적 AI (enum 패턴 분기)
+├── Enemy.cs            # 적 AI (enum 패턴 분기)
 ├── GameManager.cs      # 싱글톤 게임 매니저 + 점수 저장
 ├── SoundManager.cs     # 사운드 매니저
 ├── Item.cs             # 코인/생명 아이템
