@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class ChangeScene : MonoBehaviour
 {
-    public GameObject quitPopUp; //ê²Œì„ì¢…ë£Œ íŒì—…ì°½
+    public GameObject quitPopUp; //°ÔÀÓÁ¾·á ÆË¾÷Ã¢
 
     bool isquitOpen;
 
@@ -42,13 +42,13 @@ public class ChangeScene : MonoBehaviour
         }
     }
 
-    //ê²Œì„ ì¢…ë£Œ
+    //°ÔÀÓ Á¾·á
     public void OnClickQuitBtn()
     {
         Application.Quit();
     }
 
-    //íŒì—…ì°½ Close
+    //ÆË¾÷Ã¢ Close
     public void ClosePopup()
     {
         Time.timeScale = 1;

@@ -30,7 +30,7 @@ public class SoundManager : MonoBehaviour
         BGMStart();
     }
 
-    //bgm ì¬ìƒ
+    //bgm Àç»ı
     public void BGMStart()
     {
         bgmAudioSource.clip = bgmClip;
@@ -38,7 +38,7 @@ public class SoundManager : MonoBehaviour
         bgmAudioSource.Play();
     }
 
-    //íš¨ê³¼ìŒ ì‹¤í–‰
+    //È¿°úÀ½ ½ÇÇà
     public void PlaySFX(int index)
     {
         sfxAudioSource.PlayOneShot(sfxClips[index]);
