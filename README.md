@@ -34,6 +34,7 @@
 |------|------|
 | **적 AI** | enum + switch로 3종 몬스터 패턴 분기 |
 | **물리 기반 점프** | Rigidbody2D + Raycast로 착지 판정 |
+| **밟기 / 피격 판정** | 충돌 시 속도·위치로 '밟음'과 '피격'을 분기 |
 | **무적 시간** | 코루틴 + 레이어 변경으로 피격 후 무적 처리 |
 | **점수 영구 저장** | `PlayerPrefs`로 최고 점수 기록 |
 | **싱글톤 매니저** | `GameManager.instance`로 전역 게임 상태 관리 |
@@ -124,6 +125,41 @@ if (!isGrouded && (rayHitRight.distance < 0.01f || rayHitLeft.distance < 0.01f))
 ```
 
 → 직접 마주친 버그를 **Raycast로 진단·해결한 첫 경험**.
+
+🔗 [Player.cs](./Assets/Scripts/Player.cs)
+
+<br/>
+
+---
+
+## 🛠 3. 밟기 / 피격 — 하나의 충돌을 상황에 따라 다르게 처리
+
+### 고민했던 점
+적과 부딪히는 건 똑같은 충돌인데, **위에서 밟으면 처치 / 옆에서 닿으면 피격**으로 정반대 결과가 나와야 했습니다. "같은 충돌을 어떻게 구분하지?"가 문제였습니다.
+
+### 해결법
+별도 판정 영역을 두지 않고, **플레이어의 낙하 여부(`velocity.y < 0`)와 적과의 상대 높이**만으로 의도를 구분했습니다.
+
+```csharp
+private void OnCollisionEnter2D(Collision2D collision)
+{
+    if (collision.gameObject.CompareTag("Enemy"))
+    {
+        // 떨어지는 중이고(velocity.y < 0) 적보다 위에 있으면 → 밟아서 처치
+        if (rigid.velocity.y < 0 && transform.position.y > collision.transform.position.y)
+            OnAttack(collision.transform);
+        else
+            OnDamaged(collision.transform.position);   // 그 외 접촉은 피격
+    }
+}
+```
+
+→ 마리오식 '밟기' 메커니즘을 **추가 콜라이더 없이 물리 상태값만으로** 구현. 피격 시 넉백 방향도 적 위치를 기준으로 계산해 자연스럽게 튕기도록 했습니다.
+
+```csharp
+int dirc = transform.position.x - targetPos.x > 0 ? 1 : -1;   // 적 반대 방향
+rigid.AddForce(new Vector2(dirc, 1) * 7, ForceMode2D.Impulse);
+```
 
 🔗 [Player.cs](./Assets/Scripts/Player.cs)
 
